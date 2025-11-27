@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  cnclip-server:
+    build:
+      context: ..
+      dockerfile: Dockerfiles/cnclip-server.Dockerfile
+    image: cnclip-server:latest
+    container_name: cnclip-server
+    ports:
+      - "51000:51000"
+    volumes:
+      # 将本地模型目录挂载到容器
+      - /path/to/your/models:/models/cn_clip:ro
+      # 可选：挂载配置文件
+      # - ./cnclip-config.yml:/cas/config.yml:ro
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    command: ["--name", "CN-CLIP/ViT-L-14"]
+

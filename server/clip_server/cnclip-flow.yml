@@ -1,0 +1,17 @@
+jtype: Flow
+version: '1'
+with:
+  port: 51000
+executors:
+  - name: clip_t
+    uses:
+      jtype: CLIPEncoder
+      metas:
+        py_modules:
+          - clip_server.executors.clip_torch
+      with:
+        name: CN-CLIP/ViT-B-16  # Specify the CN-CLIP model here
+        device: cuda  # or 'cpu'
+    timeout_ready: 3000000
+    replicas: 1
+

@@ -1,0 +1,14 @@
+# Core dependencies
+clip-client>=0.8.0
+pymilvus>=2.3.0
+
+# File parsing
+python-docx>=0.8.11  # For Word documents
+markdown>=3.4.1      # For Markdown parsing
+beautifulsoup4>=4.12.0  # For HTML parsing in Markdown
+Pillow>=9.5.0        # For image processing
+
+# Utilities
+tqdm>=4.65.0         # Progress bar
+python-dotenv>=1.0.0  # Environment variables
+
