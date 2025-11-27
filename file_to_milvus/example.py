@@ -114,20 +114,23 @@ def example_full_workflow():
     parser = factory.get_parser("example.docx")
     extracted = parser.parse("example.docx")
     
+    print(f"提取到 {len(extracted.text_chunks)} 个文本块")
+    print(f"提取到 {len(extracted.images)} 个图像")
+    
     # 2. 向量化
     vectorizer = CLIPVectorizer(server_url="grpc://0.0.0.0:51000")
     
+    # 3. 存储
+    store = MilvusStore(
+        host="localhost",
+        port=19530,
+        collection_name="example_collection",
+        embedding_dim=512
+    )
+    
+    # 处理文本
     if extracted.text_chunks:
         text_embeddings = vectorizer.encode_texts(extracted.text_chunks)
-        
-        # 3. 存储
-        store = MilvusStore(
-            host="localhost",
-            port=19530,
-            collection_name="example_collection",
-            embedding_dim=text_embeddings.shape[1]
-        )
-        
         store.insert_texts(
             texts=extracted.text_chunks,
             embeddings=text_embeddings,
@@ -135,8 +138,42 @@ def example_full_workflow():
             file_type="word",
             metadata=extracted.metadata
         )
+        print(f"✓ 已存储 {len(extracted.text_chunks)} 个文本块")
+    
+    # 处理图像
+    if extracted.images:
+        from PIL import Image
+        import io
         
-        print("✓ 完整流程执行成功")
+        # 将图像二进制数据转换为PIL Image对象
+        pil_images = []
+        image_paths = []
+        for img_info in extracted.images:
+            try:
+                img = Image.open(io.BytesIO(img_info['binary']))
+                # 转换为RGB模式（CLIP需要）
+                if img.mode != 'RGB':
+                    img = img.convert('RGB')
+                pil_images.append(img)
+                image_paths.append(img_info['path'])
+            except Exception as e:
+                print(f"Warning: 无法加载图像 {img_info['path']}: {e}")
+        
+        if pil_images:
+            # 向量化图像
+            image_embeddings = vectorizer.encode_images(pil_images)
+            
+            # 存储图像向量
+            store.insert_images(
+                image_paths=image_paths,
+                embeddings=image_embeddings,
+                file_path="example.docx",
+                file_type="word",
+                metadata=extracted.metadata
+            )
+            print(f"✓ 已存储 {len(pil_images)} 个图像")
+    
+    print("✓ 完整流程执行成功")
 
 
 if __name__ == "__main__":
