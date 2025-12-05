@@ -1,7 +1,7 @@
 """
 使用示例：演示如何使用各个组件
 """
-from parser.file_parser import FileParserFactory
+from file_parsers.file_parser import FileParserFactory
 from clip.vectorizer import CLIPVectorizer
 from milvus.milvus_store import MilvusStore
 

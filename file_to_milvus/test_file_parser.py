@@ -6,10 +6,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-# 添加当前目录到路径
-sys.path.insert(0, str(Path(__file__).parent))
-
-from parser.file_parser import FileParserFactory, WordParser, ExtractedContent
+from file_parsers.file_parser import FileParserFactory, WordParser, ExtractedContent
 
 try:
     from docx import Document

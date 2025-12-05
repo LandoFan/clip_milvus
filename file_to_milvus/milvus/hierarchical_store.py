@@ -1,10 +1,18 @@
 """
 层次化存储：支持父子关系的存储和检索
 """
+import sys
+from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 import numpy as np
+
+# 确保父目录在导入路径中
+_parent_dir = Path(__file__).parent.parent.absolute()
+if str(_parent_dir) not in sys.path:
+    sys.path.insert(0, str(_parent_dir))
+
 from milvus.milvus_store import MilvusStore
-from parser.hierarchical_parser import HierarchicalContent, Chunk
+from file_parsers.hierarchical_parser import HierarchicalContent, Chunk
 from milvus.hybrid_search import HybridRetriever, HierarchicalHybridRetriever
 
 

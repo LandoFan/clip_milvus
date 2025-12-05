@@ -9,7 +9,7 @@ import argparse
 from tqdm import tqdm
 from dotenv import load_dotenv
 
-from parser.hierarchical_parser import (
+from file_parsers.hierarchical_parser import (
     HierarchicalWordParser,
     HierarchicalMarkdownParser,
     HierarchicalContent

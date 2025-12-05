@@ -9,7 +9,7 @@ import argparse
 from tqdm import tqdm
 from dotenv import load_dotenv
 
-from parser.file_parser import FileParserFactory, ExtractedContent
+from file_parsers.file_parser import FileParserFactory, ExtractedContent
 from clip.vectorizer import CLIPVectorizer
 from milvus.milvus_store import MilvusStore
 
