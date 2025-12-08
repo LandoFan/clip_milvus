@@ -135,7 +135,7 @@ def search_images(query_text: str,
                   vectorizer: CLIPVectorizer,
                   milvus_store: MilvusStore,
                   limit: int = 10,
-                  show_images: bool = False) -> List[dict]:
+                  show_images: bool = True) -> List[dict]:
     """
     用文本搜索图片
     

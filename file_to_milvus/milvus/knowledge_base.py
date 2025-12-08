@@ -2,25 +2,20 @@
 Milvus知识库API：统一的接口封装，便于调用
 """
 import os
-import sys
 from typing import List, Dict, Optional, Union
 import numpy as np
 from pathlib import Path
 import json
 from datetime import datetime
 
-# 确保父目录在导入路径中
-_parent_dir = Path(__file__).parent.parent.absolute()
-if str(_parent_dir) not in sys.path:
-    sys.path.insert(0, str(_parent_dir))
-
+from clip.vectorizer import CLIPVectorizer
 from file_parsers.hierarchical_parser import (
     HierarchicalWordParser,
     HierarchicalMarkdownParser,
     HierarchicalContent
 )
-from clip.vectorizer import CLIPVectorizer
 from milvus.hierarchical_store import HierarchicalMilvusStore
+
 
 
 class KnowledgeBase:
@@ -421,11 +416,11 @@ class KnowledgeBase:
         try:
             self.store.collection.load()
             
-            # 查询所有块
+            # 查询所有块（Milvus limit 最大 16384）
             results = self.store.collection.query(
                 expr="content_type == 'text'",
                 output_fields=["chunk_index", "content"],
-                limit=100000
+                limit=16384
             )
             
             if not results:
@@ -436,7 +431,7 @@ class KnowledgeBase:
             documents = [r['content'] for r in results]
             indices = [r['chunk_index'] for r in results]
             
-            from hybrid_search import HybridRetriever
+            from milvus.hybrid_search import HybridRetriever
             self.store.hybrid_retriever = HybridRetriever(alpha=0.7)
             self.store.hybrid_retriever.index_documents(documents, indices)
             
