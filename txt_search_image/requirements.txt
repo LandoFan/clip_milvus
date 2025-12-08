@@ -1,0 +1,33 @@
+# CLIP 文本搜图依赖
+
+# PyTorch - 根据系统 CUDA 版本选择合适的版本
+# CPU 版本: pip install torch torchvision
+# CUDA 11.8: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+# CUDA 12.1: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+torch>=1.13.0
+torchvision>=0.14.0
+
+# 图像处理
+Pillow>=9.0.0
+pillow-avif-plugin>=1.3.0
+
+# Milvus 向量数据库
+pymilvus>=2.3.0
+
+# 数值计算
+numpy>=1.21.0
+
+# 进度条和美化输出
+rich>=12.0.0
+
+# Tokenizer 相关
+regex>=2022.1.18
+ftfy>=6.0.0
+
+# 可选: 多语言 CLIP 支持
+# transformers>=4.20.0
+# sentencepiece>=0.1.96
+
+# 可选: 中文 CLIP 支持
+# cn-clip>=1.0.0
+
