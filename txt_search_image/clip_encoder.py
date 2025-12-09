@@ -16,9 +16,6 @@ try:
 except ImportError:
     BICUBIC = Image.BICUBIC
 
-import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'clip-as-service', 'server'))
-
 from clip_server.model.clip_model import CLIPModel
 from clip_server.model.tokenization import Tokenizer
 

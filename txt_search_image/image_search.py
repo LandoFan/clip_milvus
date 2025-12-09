@@ -113,9 +113,6 @@ class ImageSearchEngine:
     
     def _init_service_mode(self, clip_server: str):
         """初始化 clip-as-service 客户端模式"""
-        import sys
-        sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'clip-as-service', 'client'))
-        
         from clip_client import Client
         
         print(f"连接 clip-as-service 服务器: {clip_server}")
