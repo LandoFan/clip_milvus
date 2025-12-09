@@ -1,0 +1,18 @@
+# CN-CLIP 服务配置文件
+# 使用方法: python -m clip_server cnclip-flow.yml
+
+jtype: Flow
+version: '1'
+with:
+  port: 51000
+  protocol: grpc
+executors:
+  - name: clip_encoder
+    uses:
+      jtype: CLIPEncoder
+      with:
+        name: 'CN-CLIP/ViT-L-14'   # 使用中文 CLIP 模型
+        device: 'cuda'             # 或 'cpu'
+        # dtype: 'fp16'            # 可选: 使用半精度
+    replicas: 1
+

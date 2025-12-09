@@ -1,0 +1,29 @@
+# Local 模式依赖 (本地加载 CLIP 模型)
+# 安装: pip install -r requirements-local.txt
+#
+# 注意: PyTorch 建议根据你的 CUDA 版本单独安装:
+#   CPU: pip install torch torchvision
+#   CUDA 11.8: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#   CUDA 12.1: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+
+# Milvus 向量数据库
+pymilvus>=2.3.0
+
+# 基础依赖
+numpy>=1.21.0
+Pillow>=9.0.0
+rich>=12.0.0
+
+# PyTorch (建议单独安装适合你 CUDA 版本的)
+torch>=1.13.0
+torchvision>=0.14.0
+
+# CLIP 模型依赖
+open_clip_torch>=2.8.0,<2.9.0
+pillow-avif-plugin>=1.3.0
+regex>=2022.1.18
+ftfy>=6.0.0
+
+# 中文 CLIP 支持
+cn_clip
+
